@@ -25,6 +25,24 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"
+      },
+      {
+          test: /\.scss$/,
+          use: [
+              {
+                  loader: 'style-loader'
+              },
+              {
+                  loader: 'css-loader'
+              },
+              {
+                  loader: 'sass-loader'
+              }
+          ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg|woff\eot)$/i,
+        use: 'url-loader'
       }
     ]
   },
