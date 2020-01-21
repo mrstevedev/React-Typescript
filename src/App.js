@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import { Hello } from './components/Hello';
+import * as React from 'react';
+import { Hello } from './components/Hello.tsx';
 
-class App extends Component {
+class App extends React.Component {
     render() {
         return (
             <div>
-                <Hello compiler="TypeScript" framework="React" />
+                <Hello 
+                    compiler="Typescript" 
+                    framework="React" />
             </div>
-        );
+        )
     }
 }
 

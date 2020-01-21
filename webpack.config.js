@@ -1,42 +1,40 @@
-const path = require('path');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    mode: "production",
-
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
-
-    resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx"]
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\.ts(x?)$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "ts-loader"
-                    }
-                ]
-            },
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
-            }
-        ]
-    },
-
-    // When importing a module whose path matches one of the following, just
-    // assume a corresponding global variable exists and use that instead.
-    // This is important because it allows us to avoid bundling all of our
-    // dependencies, which allows browsers to cache those libraries between builds.
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    }
+  entry: ["./src/index.tsx"],
+  devServer: {
+    hot: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        loaders: "style-loader!css-loader"
+      },
+      {
+        test: /\.(png|jpg|gif|svg|ttf|woff|eot)$/i,
+        use: "url-loader"
+      },
+      {
+        test: /\.(t|j)sx?$/,
+        use: { loader: "awesome-typescript-loader" }
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader"
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      minify: {
+          collapseWhitespace: true
+      }
+    }),
+    new CopyWebpackPlugin([{ from: "./public/" }])
+  ]
 };
